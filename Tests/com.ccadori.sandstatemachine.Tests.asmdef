@@ -1,0 +1,17 @@
+{
+    "name": "com.ccadori.sandstatemachine.Tests",
+    "references": [
+        "GUID:29de9bcb7ab591a46907d860e10ce588"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
