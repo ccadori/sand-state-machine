@@ -9,87 +9,83 @@ As long as Sand State Machine is a UPM, all you need to do is to add a package t
 ## Creating a state
 
 ```C#
-using System
-using Sand;
+using System;
 
-public interface IWalkable 
+public interface IWalkable
 {
-  public int MyProp { get; set; }
+  int MyProp { get; set; }
   // ...
 }
 
-public class WalkState : StateMachine.State
+public class WalkState : Sand.StateMachine.State
 {
   IWalkable reference;
-  
-  public WalkState(Action<StateMachine.Machine> exitAction) : base(exitAction)
+
+  public WalkState(Action<Sand.StateMachine.Machine> exitAction) : base(exitAction)
   {
   }
-  
+
   // Called when the state machine starts
-  public override void Start(StateMachine.Machine machine, object reference)
+  public override void Start(Sand.StateMachine.Machine machine, object reference)
   {
-      base.Start(machine, reference);
-      
-      // Storing your reference
-      this.reference = reference as IWalkable;
+    base.Start(machine, reference);
+
+    // Storing your reference
+    this.reference = reference as IWalkable;
   }
 
   // Run is called every update
   public override void Run()
   {
-      base.Run();
-      // Your walk logic goes here
+    base.Run();
+    // Your walk logic goes here
   }
-  
+
   // Begin is called once the the state begins
   public override void Begin()
   {
-      base.Begin();
+    base.Begin();
   }
 
   // Begin is called once the the state ends
   public override void End()
   {
-      base.End();
+    base.End();
   }
 }
-
 ```
 
 ## Creating a state machine
 
 ```C#
-using Sand;
-
-public class EnemyStateMachine: StateMachine.SandMachineBehaviour
+public class EnemyStateMachine : Sand.StateMachine.SandMachineBehaviour
 {
   public MyClass reference;
 
   private void Awake()
   {
-    StateMachine = new StateMachine.SandMachineBehaviour(reference);
+    StateMachine = new Sand.StateMachine.Machine(reference);
 
     StateMachine.Add("idle", new MyIdleState(IdleExit), true);
     StateMachine.Add("walk", new WalkState(WalkExit), false);
   }
-  
-  public void IdleExit(StateMachine.SandMachineBehaviour machine)
+
+  public void IdleExit(Sand.StateMachine.Machine machine)
   {
-      if (someWalkCondition)
-      {
-          tree.ChangeState("walk");
-          return;
-      }
+    if (someWalkCondition)
+    {
+      machine.ChangeState("walk");
+      return;
+    }
   }
-  
-  public void WalkExit(StateMachine.SandMachineBehaviour machine)
+
+  public void WalkExit(Sand.StateMachine.Machine machine)
   {
-      if (someIdleCondition)
-      {
-          tree.ChangeState("idle");
-          return;
-      }
+    if (someIdleCondition)
+    {
+      machine.ChangeState("idle");
+      return;
+    }
   }
 }
 ```
